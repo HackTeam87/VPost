@@ -1,0 +1,15 @@
+aiomysql==0.1.0
+anyio==3.5.0
+asgiref==3.5.0
+certifi==2021.10.8
+charset-normalizer==2.0.12
+databases==0.5.5
+mysql-connector-python==8.0.29
+PyMySQL==1.0.2
+pyTelegramBotAPI==4.5.0
+python-dotenv==0.19.2
+PyYAML==6.0
+SQLAlchemy==1.4.36
+starlette==0.17.1
+typing-extensions==4.1.1
+
