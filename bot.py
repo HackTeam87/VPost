@@ -1,23 +1,25 @@
+#Выставляем кодировку
 # -*- coding: utf-8 -*-
+
+#Импортируем необходимые библиотеки 
 from db.connect_db import SessionLocal
 import time
 from datetime import datetime
-
 import telebot
 from telebot import types
 from core.config import TELEGRAM_TOCKEN
 
-#tocken = '5171909645:AAG8HefH3P9iSSk4eMec70jBde24Vxtb3b8'
+#Обьявляем переменные
 tocken = TELEGRAM_TOCKEN
 bot = telebot.TeleBot(tocken)
-# parse_mode='HTML'
 db = SessionLocal()
 
 U_Name = []
 U_Branch = []
 U_Position = []
 
- # Менюшки   
+
+# Инициализируем Меню телеграм бота   
 menu1 = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
 btn1 = types.KeyboardButton("Перелік співробітників")
 btn2 = types.KeyboardButton("Змінити статус")
@@ -34,7 +36,7 @@ btn6 = types.InlineKeyboardButton(text='Не в роботі', callback_data='us
 menu3.add(btn5,btn6)
 
 
-# Функции
+#Функции
 #Стартовое меню /start
 @bot.message_handler(commands=['start'])
 def start(message):
@@ -134,7 +136,7 @@ def save_all_to_db(message):
 
 
 
-# Обработчик нажатий на кнопки
+# Обработчик событий при нажатии на кнопки
 @bot.callback_query_handler(func=lambda call: True)
 def callback_worker(call):
     # Если нажали на одну из 12 кнопок — выводим гороскоп
@@ -156,5 +158,6 @@ def callback_worker(call):
         db.execute(f'UPDATE employees SET status = 0  WHERE telegram_id = {str(call.message.chat.id)}') 
         db.commit()
         bot.send_message(call.message.chat.id, "Статус змінено -> не в роботі", reply_markup=menu1) 
-            
+	
+ #запускаем бот           
 bot.infinity_polling()    
